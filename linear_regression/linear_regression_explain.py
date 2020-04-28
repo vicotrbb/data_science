@@ -1,4 +1,6 @@
-# Linear Regression
+# Regressao Linear
+# by: Victor Bona
+# Fonte: https://towardsdatascience.com/linear-regression-using-python-b136c91bf0a2
 
 # A regressao linear normalmente e o primeiro algoritmo de machine learning que os cientistas de dados aprendem, 
 # apesar de simples e muito importante masterizar esse metodo, visto que muitos problemas igualmente simples mas importantes 
@@ -20,7 +22,7 @@
 # A hipotese da regressao linear
 
 # O modelo da regressao linear pode ser representado pelo seguinte modelo matematico:
-# Y = θ₀ + θ₁x₁ + ... + θₓxₓ
+#   Y = θ₀ + θ₁x₁ + ... + θₓxₓ
 
 # Y = O valor previsto
 # θ₀ = O termo de bias(desvio sistemático do valor real)
@@ -32,7 +34,13 @@
 # θⁿ = Inclui o vetor de parametros do modelo e do termo de bias
 # x = O vetor de variaveis independes, sendo que x₁ = 1
 
-# Criamos um dataset para comecarmos a treinar nosso modelo de regressao linear
+# Criacao de um dataset de testes, gerado randomicamente
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(0)
+x = np.random.rand(100, 1)
+y = 2 + 3 * x + np.random.rand(100, 1)
 
 # ------------------------------------------------------------
 
@@ -85,11 +93,11 @@
 # A taxa de aprendizado precisa ser definida com cuidado, visto que se for menor demais, o modelo vai demorar demais para ser
 # treinado. Caso seja muito grande, e posssivel que o modelo falhe ao convergir para o minimo da funcao de custo e passar dela
 
-# Implementando o algoritmo
-import numpy as np
+# Implementando o algoritmo 
 
 
-class LinearRegression:
+class LinearRession:
+
     """
     Parametros:
         eta: float, taxa de aprendizado
@@ -101,9 +109,9 @@ class LinearRegression:
     """
 
     def __init__(self, eta=0.05, n_iterations=1000):
-        self.eta = eta  # eta representa a taxa de aprendizado do modelo
-        self.n_iterations = n_iterations  # Representa o numero de iteracoes que o melo vai executar durante o aprendizado
-        self.cost_ = []
+        self.eta = eta # eta representa a taxa de aprendizado do modelo
+        self.n_iterations = n_iterations # Representa o numero de iteracoes que o melo vai executar durante o aprendizado
+        self.cost_ = [] 
         self.w_ = []
 
     def fit(self, x, y):
@@ -113,16 +121,20 @@ class LinearRegression:
             Amostras de treino
         y: array, [amostras, valores alvo]
             Valores alvo
+        Retorna:
+            O proprio objeto
         """
-        self.w_ = np.zeros((x.shape[1], 1))
+        self.w_ = np.zeros((x.shape[1], 1))  # np.zeros retorna um array de 0, 
+        # https://docs.scipy.org/doc/numpy/reference/generated/numpy.zeros.html
         m = x.shape[0]
 
         for _ in range(self.n_iterations):
-            y_pred = np.dot(x, self.w_)
+            y_pred = np.dot(x, self.w_) #  np.dot retorna o produto de 2 arrays, 
+            #https://docs.scipy.org/doc/numpy/reference/generated/numpy.dot.html
             residuals = y_pred - y
             gradient_vector = np.dot(x.T, residuals)
             self.w_ -= (self.eta / m) * gradient_vector
-            cost = np.sum((residuals ** 2)) / (2 * m)
+            cost = np.sum((residuals ** 2)) / (2 * m) # Calcula a funcao de custo
             self.cost_.append(cost)
         return self
 
@@ -135,3 +147,35 @@ class LinearRegression:
             Valor predizido
         """
         return np.dot(x, self.w_)
+
+    def evaluate(y, y_predicted):
+        """
+        Parametros:
+        y: array, [amostras, recurso]
+            Amostras de treino
+        y_predicted: array, [amostras, valores preditos]
+            Valores preditos pelo modelo
+        Retorna:
+            Acuracia do modelo
+        """
+        mse = np.sum((y_predicted - y)**2)
+        mrse = np.sqrt(mse/len(y))
+
+        ssr = np.sum((y_predicted - y)**2)
+        sst = np.sum((y - np.mean(y))**2)
+        r2 = 1 - (ssr/sst)
+        return mrse, r2
+
+# ------------------------------------------------------------------------------------------------------------
+
+# Processo de avalicao de acuracia do algortimo
+
+# Raiz da media do quadrado da soma dos residuos
+# Este metodo e definido pela seguinte funcao:
+# √(1/(Σ(h(xᶦ) - yᶦ)²))
+
+# Coeficiente de determinação
+# Este metodo e composto pelo coeficiente da terminacao, representado pela funcao
+# R² = 1 - ssr/sst
+# Sendo que, ssr = Σ(h(xᶦ) - yᶦ)²)
+#           sst = Σ((yᶦ - y_ᶦ)²)
