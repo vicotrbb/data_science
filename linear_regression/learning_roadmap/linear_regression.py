@@ -1,13 +1,13 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
 # Explicacao em linear_regression/linear_regression_explain.py
 
-class LinearRegression:
+class SimpleLinearRegression:
 
     def __init__(self, eta=0.05, n_iterations=1000):
         self.eta = eta 
         self.n_iterations = n_iterations
-        self.cost_ = [] 
+        self.cost_ = []
         self.w_ = []
 
     def fit(self, x, y):
@@ -34,3 +34,10 @@ class LinearRegression:
         sst = np.sum((y - np.mean(y))**2)
         r2 = 1 - (ssr/sst)
         return mrse, r2
+
+    def plot_cost_function(self):
+        plt.plot(self.cost_, np.arange(self.n_iterations), color='b')
+        plt.xlabel('Cost function')
+        plt.ylabel('Number of iterations')
+        plt.title('Cost function x no of iterations')
+        plt.show()

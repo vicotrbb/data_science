@@ -166,8 +166,6 @@ class LinearRession:
         r2 = 1 - (ssr/sst)
         return mrse, r2
 
-# ------------------------------------------------------------------------------------------------------------
-
 # Processo de avalicao de acuracia do algortimo
 
 # Raiz da media do quadrado da soma dos residuos
@@ -179,3 +177,49 @@ class LinearRession:
 # R² = 1 - ssr/sst
 # Sendo que, ssr = Σ(h(xᶦ) - yᶦ)²)
 #           sst = Σ((yᶦ - y_ᶦ)²)
+
+
+# ---------------------------------------------------IMPLEMENTACAO SKLEARN--------------------------------------------------------
+
+# O scikit-learn(sklearn) e uma biblioteca de aprendizado de maquina de codigo aberto para o python.
+# Exemplo de implementacao detalhada de uma regressao linear usando o sklearn
+
+# Primeiro separamos nosso conjunto de dados em 2, um de treino e outro de teste.
+# Fazemos isso para avaliar a perfomance de nosso modelo, dividimos o modelo em 80% para treino e 20% para testes
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=5)
+
+# Criamos o modelo e treinamos ele com nosso conjunto de treino
+model = LinearRegression()
+model.fit(x_train, y_train) # X conteem os parametros 'LSTAT' e 'RM'. Y conteem o preco das casas 
+
+# Realizamos a previsao e medimos a acuracia de nosso conjunto de treino
+# Conjunto de treino
+train_predict = model.predict(x_train) # Para testarmos a eficacia de nosso modelo com dados conhecidos, usamos o conjunto de
+# treino para avaliarmos.
+rmse = (np.sqrt(mean_squared_error(y_train, train_predict))) # Tiramos as metricas de perfomance dele, usando os metodos
+# mean_squared_error & r2_score
+r2 = r2_score(y_train, train_predict)
+plt.scatter(y_train, train_predict, s=10, c='red', label='Teste') # Plotamos o resultado para futura comparacao
+
+print('Train set perfomance')
+print(f'RMSE: {rmse}')
+print(f'R2: {r2}')
+
+# Conjunto de teste
+# Realizamos agora uma avaliacao com nosso conjunto de testes, esses dados ainda nao foram apresentados ao nosso modelo, por 
+# isso a importancia desse teste, para termos nocao de como o modelo vai se comportar com dados desconhecidos
+test_predict = model.predict(x_test)
+rmse = (np.sqrt(mean_squared_error(y_test, test_predict)))
+r2 = r2_score(y_test, test_predict)
+plt.scatter(y_test, test_predict, s=10, c='blue', label='Treino') # Plotamos o resultado para comparacao
+
+print('Train set perfomance')
+print(f'RMSE: {rmse}')
+print(f'R2: {r2}')
+
+# Plotamos ambos os resultados em um grafico
+plt.legend(loc='lower right')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()
+
