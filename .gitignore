@@ -290,3 +290,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Personal
+.zip
+pneumonia_dataset
