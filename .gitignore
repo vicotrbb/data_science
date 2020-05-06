@@ -292,5 +292,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # Personal
-.zip
-pneumonia_dataset
+pneumonia_dataset.zip
