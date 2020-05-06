@@ -1,61 +1,51 @@
-# Neural network imports
-from keras.datasets import mnist
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Conv2D, MaxPool2D, Flatten
-from keras.utils import np_utils
-
-# Accuracy measure imports
-from sklearn.metrics import accuracy_score
-from PIL import Image
 import numpy as np
+import os
+import cv2
+import random
+import pickle
 
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
+import tensorflow as tf 
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
+import pickle
+from keras.models import model_from_json
+from keras.models import load_model
+import matplotlib.pyplot as plt
 
-# Reconfigura o conjunto para um vetor de entrada de 28x28 pixels
-x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
-x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
-x_train = x_train.astype('float32')
-x_test = x_test.astype('float32')
+# in this exact case, i have just two classes of data, but doing like this, i have an algorithm with can be used for more classes
+# in the future
+def prepare_data(datadir, img_size=28):
+	file_list = []
+	class_list = []
 
-# Padroniza os dados pra facilitar no treinamento
-x_train /= 255
-x_test /= 255
+	train_dir_name = 'train'
+	test_dir_name = 'test'
 
-# encode utilizando o utilitario do numpy imbutido no keras
-n_classes = 10
-print(f'Formato antes do encoding: {y_train.shape}')
-y_train = np_utils.to_categorical(y_train, n_classes)
-y_test = np_utils.to_categorical(y_test, n_classes)
-print(f'Formato depois do encoding: {y_train.shape}')
+	categories = ['normal', 'pneumonia']
+	data = []
+	for category in categories: 
+		path = os.path.join(datadir, category)
+		class_index = categories.index(category)
+		for img in os.listdir(path):
+		try :
+			img_array = cv2.imread(os.path.join(path, img), cv2.imread_grayscale) # parse the image to an array in greyscale
+			new_array = cv2.resize(img_array, (img_size, img_size)) # Resize the image to the correct size
+			data.append([new_array, class_num]) # Add it to the array
+		except exception as e:
+			print(f'Error processing {img}')
+			pass
 
-# Constroi a arquitetura da rede neural
-model = Sequential()
-# Camada convolucional
-model.add(Conv2D(25, kernel_size=(3, 3), strides=(1, 1), padding='valid', 
-                 activation='relu', input_shape=(28, 28, 1)))
-model.add(MaxPool2D(pool_size=(1, 1)))
-model.add(Flatten())
-# Camada oculta
-model.add(Dense(100, activation='relu'))
-# Camada de saida
-model.add(Dense(10, activation='softmax'))
+	random.shuffle(data) # randomiza a ordem dos arquivos
+	x = []
+	y = []
 
-# Compila o modelo sequencial
-model.compile(loss='categorical_crossentropy', metrics=['accuracy'], 
-              optimizer='adam')
-# Treina o modelo
-model.fit(x_train, y_train, batch_size=128, epochs=10, 
-          validation_data=(x_test, y_test))
+	X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1)
 
-img = Image.open(r"mnist_test.png") 
-img = img.resize((28, 28))
-# convert rgb to grayscale
-img = img.convert('L')
-img = np.array(img)
-# reshaping to support our model input and normalizing
-img = img.reshape(1, 28, 28, 1)
-img = img / 255.0
-# predicting the class
-res = model.predict([img])[0]
-print(np.argmax(res))
-print(max(res) * 100)
+	# Creating the files containing all the information about your model
+	pickle_out = open("X.pickle", "wb")
+	pickle.dump(X, pickle_out)
+	pickle_out.close()
+
+	pickle_out = open("y.pickle", "wb")
+	pickle.dump(y, pickle_out)
+	pickle_out.close()
