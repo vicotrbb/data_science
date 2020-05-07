@@ -12,7 +12,7 @@ from keras.models import model_from_json
 from keras.models import load_model
 import matplotlib.pyplot as plt
 
-# in this exact case, i have just two classes of data, but doing like this, i have an algorithm with can be used for more classes
+# in this exact case, i have just two classes of data, but doing like this, i have an algorithm which can be used for more classes
 # in the future
 def prepare_data(datadir, img_size=28):
 	file_list = []
