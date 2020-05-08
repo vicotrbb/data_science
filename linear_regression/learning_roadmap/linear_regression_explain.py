@@ -14,8 +14,9 @@
 
 # Oque e exatamente a Regressao linear?
 
-# O objetivo da regressao linear e encontrar um relacionamento entre uma variavel constante(ponto de interesse) e diversar outras
-# variaveis independentes, basicamente, encontrar dependencias em uma variavel aparentemente independente. Pode ser de 2 tipos:
+# O objetivo da regressao linear e encontrar um relacionamento entre uma ou mais variaveis independentes e caracteristicas 
+# constantes de um conjunto de dados, basicamente, encontrar dependencias em uma variavel aparentemente independente. 
+# Pode ser de 2 tipos: 
 # Univariate Linear Regression: Quando so existe uma variavel independente.
 # Multiple Linear Regression: Quando existem mais variaveis indepentendes.
 
