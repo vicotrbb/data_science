@@ -18,5 +18,6 @@ My learning roadmap will be based on this image, every time I complete a milesto
 * Linear Regression - On going
 * Image classification - On going
 * Neural networks - On going
+* Computational Vision - On going
 * Decision trees
 * More to be added
