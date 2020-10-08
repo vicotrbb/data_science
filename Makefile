@@ -9,7 +9,7 @@ VIRTUALENV:=$(shell which virtualenv)
 
 # PHONY
 
-.PHONY: clean prune-venv start-notebook commit
+.PHONY: clean prune-venv venv start-notebook commit
 
 # functions
 
@@ -30,14 +30,18 @@ venv:
 	$(create-venv)
 	@$(PIP) install --no-cache-dir -r $(REQUIREMENTS) | grep -v 'already satisfied' || true
 
-start-notebook:
+start-notebook-nb:
 	jupyter notebook --no-browser --port $(NOTEBOOK-PORT)
+
+start-notebook-wb:
+	jupyter notebook --port $(NOTEBOOK-PORT)
 
 howami-git:
 	@git config --global user.email "victor.bona@hotmail.com"
 	@git config --global user.name "vicotrbb"
 
 commit: howami-git
+	@git-pull
 	@git add .
 	@git commit -m "Commit made by makefile command"
 	@git push origin master
