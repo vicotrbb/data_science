@@ -10,7 +10,7 @@ Observations:
 
 ## Roadmap
 
-My learning roadmap will be based on this image, every time I complete a milestone will be added to the topic a notebook with all the stuff I have learned during the studies of that topic. Credits for the map to https://github.com/mrdbourke
+My learning roadmap will be based on this image, every time I complete a milestone will be added to the topic a notebook with all the stuff I have learned during the studies of that topic. Credits for the map to https://github.com/mrdbourke (amazing ML content).
 
 
 ![Machine learning Roadmap](https://github.com/vicotrbb/data_science/blob/master/misc/2020-ml-roadmap-full.png)
