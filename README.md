@@ -10,17 +10,7 @@ Observations:
 
 ## Roadmap
 
-My learning roadmap will be based on this image, every time I complete a milestone will be added to the topic a notebook with all the stuff I have learned during the studies of that topic. 
+My learning roadmap will be based on this image, every time I complete a milestone will be added to the topic a notebook with all the stuff I have learned during the studies of that topic. Credits for the map to https://github.com/mrdbourke
 
 
-![Machine learning Roadmap](https://miro.medium.com/max/2796/0*QYxNNYh6W9jO1b_-.png)
-
-## Milestones
-
-* Regressions
-* Image classification - On going
-* Neural networks - On going
-* Computational Vision - On going
-* Decision trees
-* ML engineers guidelines - On going
-* Projects - On going
+![Machine learning Roadmap](https://github.com/vicotrbb/data_science/blob/master/misc/2020-ml-roadmap-full.png)
